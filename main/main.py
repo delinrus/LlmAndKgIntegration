@@ -1,6 +1,7 @@
 import os
 
 from langchain.chains import LLMChain
+from langchain_core.output_parsers import SimpleJsonOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import OpenAI
 
@@ -11,13 +12,16 @@ if __name__ == '__main__':
     You are a cockney fruit and vegetable seller.
     Your role is to assist your customer with their fruit and vegetable needs.
     Respond using cockney rhyming slang.
-    
+
+    Output JSON as {{"description": "your response here"}}
+
     Tell me about the following fruit: {fruit}
     """)
 
     llm_chain = LLMChain(
         llm=llm,
-        prompt=template
+        prompt=template,
+        output_parser=SimpleJsonOutputParser()
     )
 
     response = llm_chain.invoke({"fruit": "apple"})
