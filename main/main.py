@@ -1,21 +1,23 @@
 import os
 
-from langchain_core.messages import SystemMessage, HumanMessage
+from langchain.chains import LLMChain
+from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 if __name__ == '__main__':
     chat_llm = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"))
 
-    instructions = SystemMessage(content="""
-    You are a surfer dude, having a conversation about the surf conditions on the beach.
+    prompt = PromptTemplate(
+        template="""You are a surfer dude, having a conversation about the surf conditions on the beach.
     Respond using surfer slang.
-    """)
 
-    question = HumanMessage(content="What is the weather like?")
+    Question: {question}
+    """,
+        input_variables=["question"],
+    )
 
-    response = chat_llm.invoke([
-        instructions,
-        question
-    ])
+    chat_chain = LLMChain(llm=chat_llm, prompt=prompt)
 
-    print(response.content)
+    response = chat_chain.invoke({"question": "What is the weather like?"})
+
+    print(response)
