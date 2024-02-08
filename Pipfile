@@ -9,6 +9,7 @@ openai = "*"
 langchain-openai = "*"
 neo4j = "*"
 langchainhub = "*"
+youtube-search = "*"
 
 [dev-packages]
 
