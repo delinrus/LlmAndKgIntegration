@@ -7,6 +7,8 @@ name = "pypi"
 langchain = "*"
 openai = "*"
 langchain-openai = "*"
+neo4j = "*"
+langchainhub = "*"
 
 [dev-packages]
 

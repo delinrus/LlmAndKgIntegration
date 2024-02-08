@@ -1,29 +1,21 @@
 import os
 
-from langchain.chains import LLMChain
-from langchain_core.output_parsers import SimpleJsonOutputParser
-from langchain_core.prompts import PromptTemplate
-from langchain_openai import OpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_openai import ChatOpenAI
 
 if __name__ == '__main__':
-    llm = OpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), model="gpt-3.5-turbo-instruct", temperature=0)
+    chat_llm = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"))
 
-    template = PromptTemplate.from_template("""
-    You are a cockney fruit and vegetable seller.
-    Your role is to assist your customer with their fruit and vegetable needs.
-    Respond using cockney rhyming slang.
-
-    Output JSON as {{"description": "your response here"}}
-
-    Tell me about the following fruit: {fruit}
+    instructions = SystemMessage(content="""
+    You are a surfer dude, having a conversation about the surf conditions on the beach.
+    Respond using surfer slang.
     """)
 
-    llm_chain = LLMChain(
-        llm=llm,
-        prompt=template,
-        output_parser=SimpleJsonOutputParser()
-    )
+    question = HumanMessage(content="What is the weather like?")
 
-    response = llm_chain.invoke({"fruit": "apple"})
+    response = chat_llm.invoke([
+        instructions,
+        question
+    ])
 
-    print(response)
+    print(response.content)
