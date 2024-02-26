@@ -4,12 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-langchain = "*"
+langchain = "==0.1.6"
 openai = "*"
 langchain-openai = "*"
 neo4j = "*"
 langchainhub = "*"
 youtube-search = "*"
+beautifulsoup4 = "*"
+requests = "*"
+wikipedia = "*"
+langchain-community = "==0.0.19"
 
 [dev-packages]
 
